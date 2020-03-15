@@ -25,10 +25,24 @@ button {
     margin: auto;
   }
 
-  #countdown{
+#question{
+      text-align: center;
+      /* text-emphasis: bold; */
+      font-size: 3em;
+      color: lightslategrey;
+}
+
+#countdown{
       text-align: center;
   }
 
-  .hidden{
+.hidden{
       display: none;
   }
+
+.answer{
+    cursor: pointer;
+    text-align: center;
+    font-size: 2em;
+    color: grey;
+}

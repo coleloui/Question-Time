@@ -15,40 +15,40 @@ var incorrect = 0
 
 
 questArray = [{
-    question: "Who was the first player drafted by the Lightning",
+    question: "Who was the first player drafted by the Lightning?",
     answer1: "Roman Hamrlik",
     answer2: "John Snow",
     answer3: "Dino Ciccarelli",
     answer4: "Chris Gratton",
     correct: "Roman Hamerlick"
 },{
-    question: "Where did the Lightining first play",
+    question: "Where did the Lightining first play?",
     answer1: "Amalie Arena",
     answer2: "Thunderdome",
     answer3: "Raymond James Stadium",
     answer4: "Florida State Fairgrounds",
     correct: "Florida State Fairgrounds"
 },{
-    question: "What year did the Lightning win the Stanley Cup",
+    question: "What year did the Lightning win the Stanley Cup?",
     answer1: "They have yet to win the best trophy in professions sports",
     answer2: "1999",
     answer3: "2004",
     answer4: "2014",
     correct: "2004"
 },{
-    question: "Where did the Lightining first play",
-    answer1: "Amalie Arena",
-    answer2: "Thunderdome",
-    answer3: "Raymond James Stadium",
-    answer4: "Florida State Fairgrounds",
-    correct: "Florida State Fairgrounds"
+    question: "Who is the all time leading Goal scorer for the Lightning?",
+    answer1: "Vincent Lecavalier",
+    answer2: "Nikita Kucherov",
+    answer3: "Steven Stamkos",
+    answer4: "Martin St.Louis",
+    correct: "Steven Stamkos"
 },{
-    question: "Where did the Lightining first play",
-    answer1: "Amalie Arena",
-    answer2: "Thunderdome",
-    answer3: "Raymond James Stadium",
-    answer4: "Florida State Fairgrounds",
-    correct: "Florida State Fairgrounds"
+    question: "What goaltender has the most Shutouts in Lightning history?",
+    answer1: "Ben Bishop",
+    answer2: "Nikolai Khabibulin",
+    answer3: "Daren Puppa",
+    answer4: "Andrei Vasilevski",
+    correct: "Andrei Vasilevski"
 }]
 
 

@@ -13,7 +13,7 @@ var scoreScreen = document.getElementById("scorescreen")
 var result = document.getElementById("result")
 var tryAgain = document.getElementById("tryagain")
 var timerInterval
-var timeLeft = 10
+var timeLeft = 15
 var counter = 0
 var correct = 0
 var incorrect = 0
@@ -87,6 +87,7 @@ function timer() {
         console.log("you guessed correct")
         correct++
         counter++
+        timeLeft += 10
         checker()
     }
     
@@ -121,7 +122,9 @@ function timer() {
 
 function reset() {
     if(timeLeft <= -2, counter != 0) {
-    timeLeft = 45
+    timeLeft = 15
+    correct = 0
+    incorrect = 0
     counter = 0
     clearInterval(timerInterval)
 }}

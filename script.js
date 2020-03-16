@@ -9,6 +9,7 @@ var answer2El = document.getElementById("answer2")
 var answer3El = document.getElementById("answer3")
 var answer4El = document.getElementById("answer4")
 var timerInterval
+var timeLeft = 45
 var counter = 0
 var correct = 0
 var incorrect = 0
@@ -20,7 +21,7 @@ questArray = [{
     answer2: "John Snow",
     answer3: "Dino Ciccarelli",
     answer4: "Chris Gratton",
-    correct: "Roman Hamerlick"
+    correct: "Roman Hamrlik"
 },{
     question: "Where did the Lightining first play?",
     answer1: "Amalie Arena",
@@ -58,22 +59,55 @@ function renderQuestions() {
     answer2El.textContent = questArray[counter].answer2
     answer3El.textContent = questArray[counter].answer3
     answer4El.textContent = questArray[counter].answer4
-    timer()
 }
 
 
 function timer() {
-    var timeLeft = 15
 
         timerInterval = setInterval(function () {
         timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
 
-        if (timeLeft === -1) {
+        if (timeLeft <= -2) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
         }
     }, 1000);
+    
+    function handleCorrect(){
+        console.log("you guessed correct")
+        correct++
+        counter++
+        checker()
+    }
+    
+    function handleIncorrect(){
+        console.log("you guessed incorrect")
+        incorrect++
+        counter++
+        timeLeft -= 10
+        console.log(timeLeft)
+        checker()
+    }
+    
+    function checker(){
+        if(counter === questArray.length){
+            alert("game over")
+        }else{
+            renderQuestions()
+            // end screen
+        }
+    }
+
+    answersEl.forEach(function(answerEl){
+        answerEl.addEventListener("click", function(event){
+            // clearInterval(timerInterval);
+            if(event.target.textContent === questArray[counter].correct){
+                handleCorrect()
+            } else{
+                handleIncorrect()}
+        })
+    })
 }
 
 function starting() {
@@ -84,48 +118,11 @@ function starting() {
     }
 }
 
-function handleCorrect(){
-    console.log("you guessed correct")
-    correct++
-    counter++
-    checker()
-}
-
-function handleIncorrect(){
-    console.log("you guessed incorrect")
-    incorrect++
-    counter++
-    checker()
-}
-
-function checker(){
-    if(counter === questArray.length){
-        alert("game over")
-    }else{
-        renderQuestions()
-        // end screen
-    }
-}
-
-
-answersEl.forEach(function(answerEl){
-    // console.log(answerEl)
-    answerEl.addEventListener("click", function(event){
-        clearInterval(timerInterval);
-        // console.log(event.target.textContent)
-        // console.log(questArray[counter].correct)
-        if(event.target.textContent === questArray[counter].correct){
-            handleCorrect()
-        } else{
-            handleIncorrect()}
-    })
-})
-
-
-
 start.addEventListener("click", function () {
     renderQuestions()
     starting()
+    timer()
 })
+
 
 // starting();

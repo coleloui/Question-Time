@@ -2,18 +2,24 @@ var body = document.body;
 var timerEl = document.getElementById("countdown");
 var start = document.getElementById("start");
 var firstEl = document.getElementById("begin");
+var container = document.getElementById("container")
 var questionEl = document.getElementById("question")
 var answersEl = document.querySelectorAll(".answer")
 var answer1El = document.getElementById("answer1")
 var answer2El = document.getElementById("answer2")
 var answer3El = document.getElementById("answer3")
 var answer4El = document.getElementById("answer4")
+var scoreScreen = document.getElementById("scorescreen")
+var result = document.getElementById("result")
+var tryAgain = document.getElementById("tryagain")
 var timerInterval
 var timeLeft = 45
 var counter = 0
 var correct = 0
 var incorrect = 0
 
+container.style.display = "none"
+scoreScreen.style.display = "none"
 
 questArray = [{
     question: "Who was the first player drafted by the Lightning?",
@@ -64,6 +70,7 @@ function renderQuestions() {
 
 function timer() {
 
+
         timerInterval = setInterval(function () {
         timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
@@ -71,8 +78,10 @@ function timer() {
         if (timeLeft <= -2) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
+            screen1();
+            score();
         }
-    }, 1000);
+    }, 1000)
     
     function handleCorrect(){
         console.log("you guessed correct")
@@ -86,22 +95,21 @@ function timer() {
         incorrect++
         counter++
         timeLeft -= 10
-        console.log(timeLeft)
         checker()
     }
     
     function checker(){
         if(counter === questArray.length){
-            alert("game over")
+            // clearInterval(timerInterval)
+            screen1()
+            score()
         }else{
             renderQuestions()
-            // end screen
         }
     }
 
     answersEl.forEach(function(answerEl){
         answerEl.addEventListener("click", function(event){
-            // clearInterval(timerInterval);
             if(event.target.textContent === questArray[counter].correct){
                 handleCorrect()
             } else{
@@ -110,6 +118,15 @@ function timer() {
     })
 }
 
+
+function reset() {
+    if(timeLeft <= -2, counter != 0) {
+    timeLeft = 45
+    counter = 0
+}}
+
+
+
 function starting() {
     if (firstEl.style.display === "none") {
         firstEl.style.display = "block";
@@ -117,12 +134,43 @@ function starting() {
         firstEl.style.display = "none";
     }
 }
+function screen1() {
+    if (container.style.display === "none") {
+        container.style.display = "block";
+    } else {
+        container.style.display = "none";
+    }
+}
+
+function score() {
+    if (scoreScreen.style.display === "none") {
+        scoreScreen.style.display = "block";
+    } else {
+        scoreScreen.style.display = "none";
+    }
+    // console.log(timerInterval)
+    // clearInterval(timerInterval)
+    result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
+
+    tryAgain.addEventListener("click", function(){
+        if (scoreScreen.style.display === "none") {
+            scoreScreen.style.display = "block";
+        } else {
+            scoreScreen.style.display = "none";
+        }
+        starting()
+    })
+}
+
+
+
 
 start.addEventListener("click", function () {
+    reset()
     renderQuestions()
     starting()
     timer()
+    screen1()
 })
 
 
-// starting();

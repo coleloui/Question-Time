@@ -28,28 +28,28 @@ questArray = [{
     answer3: "Dino Ciccarelli",
     answer4: "Chris Gratton",
     correct: "Roman Hamrlik"
-},{
+}, {
     question: "Where did the Lightining first play?",
     answer1: "Amalie Arena",
     answer2: "Thunderdome",
     answer3: "Raymond James Stadium",
     answer4: "Florida State Fairgrounds",
     correct: "Florida State Fairgrounds"
-},{
+}, {
     question: "What year did the Lightning win the Stanley Cup?",
     answer1: "They have yet to win the best trophy in professions sports",
     answer2: "1999",
     answer3: "2004",
     answer4: "2014",
     correct: "2004"
-},{
+}, {
     question: "Who is the all time leading Goal scorer for the Lightning?",
     answer1: "Vincent Lecavalier",
     answer2: "Nikita Kucherov",
     answer3: "Steven Stamkos",
     answer4: "Martin St.Louis",
     correct: "Steven Stamkos"
-},{
+}, {
     question: "What goaltender has the most Shutouts in Lightning history?",
     answer1: "Ben Bishop",
     answer2: "Nikolai Khabibulin",
@@ -58,6 +58,29 @@ questArray = [{
     correct: "Andrei Vasilevski"
 }]
 
+start.addEventListener("click", function () {
+    timer()
+    renderQuestions()
+    starting()
+    screen1()
+})
+
+answersEl.forEach(function (answerEl) {
+    answerEl.addEventListener("click", function (event) {
+        event.preventDefault()
+        if (event.target.textContent === questArray[counter].correct) {
+            handleCorrect()
+        } else {
+            handleIncorrect()
+        }
+    })
+})
+
+tryAgain.addEventListener("click", function () {
+    score()
+    starting()
+    reset()
+})
 
 function renderQuestions() {
     questionEl.textContent = questArray[counter].question
@@ -67,11 +90,10 @@ function renderQuestions() {
     answer4El.textContent = questArray[counter].answer4
 }
 
-
 function timer() {
 
 
-        timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
         timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
 
@@ -82,52 +104,49 @@ function timer() {
             score();
         }
     }, 1000)
-    
-    function handleCorrect(){
-        console.log("you guessed correct")
-        correct++
-        counter++
-        checker()
-    }
-    
-    function handleIncorrect(){
-        console.log("you guessed incorrect")
-        incorrect++
-        counter++
-        timeLeft -= 10
-        checker()
-    }
-    
-    function checker(){
-        if(counter === questArray.length){
-            clearInterval(timerInterval)
-            screen1()
-            score()
-        }else{
-            renderQuestions()
-        }
-    }
+}
 
-    answersEl.forEach(function(answerEl){
-        answerEl.addEventListener("click", function(event){
-            if(event.target.textContent === questArray[counter].correct){
-                handleCorrect()
-            } else{
-                handleIncorrect()}
-        })
-    })
+function handleCorrect() {
+    console.log("you guessed correct")
+    correct++
+    counter++
+    checker()
+}
+
+function handleIncorrect() {
+    console.log("you guessed incorrect")
+    incorrect++
+    counter++
+    timeLeft -= 10
+    checker()
+}
+
+function checker() {
+    if (counter === questArray.length) {
+        clearInterval(timerInterval)
+        screen1()
+        score()
+    } else {
+        renderQuestions()
+    }
+}
+
+
+function renderScore() {
+    result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
+
 }
 
 
 function reset() {
-    if(timeLeft <= -2, counter != 0) {
-    timeLeft = 45
-    correct = 0
-    incorrect = 0
-    counter = 0
-    clearInterval(timerInterval)
-}}
-
+    if (timeLeft <= -2, counter != 0) {
+        timeLeft = 45
+        correct = 0
+        incorrect = 0
+        counter = 0
+        clearInterval(timerInterval)
+    }
+}
 
 
 function starting() {
@@ -137,6 +156,7 @@ function starting() {
         firstEl.style.display = "none";
     }
 }
+
 function screen1() {
     if (container.style.display === "none") {
         container.style.display = "block";
@@ -151,29 +171,5 @@ function score() {
     } else {
         scoreScreen.style.display = "none";
     }
-    // console.log(timerInterval)
-    // clearInterval(timerInterval)
-    result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
-
-    tryAgain.addEventListener("click", function(){
-        if (scoreScreen.style.display === "none") {
-            scoreScreen.style.display = "block";
-        } else {
-            scoreScreen.style.display = "none";
-        }
-        starting()
-    })
+    renderScore()
 }
-
-
-
-
-start.addEventListener("click", function () {
-    reset()
-    renderQuestions()
-    starting()
-    timer()
-    screen1()
-})
-
-

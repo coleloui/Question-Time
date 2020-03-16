@@ -121,7 +121,7 @@ function timer() {
 
 function reset() {
     if(timeLeft <= -2, counter != 0) {
-    timeLeft = 15
+    timeLeft = 45
     correct = 0
     incorrect = 0
     counter = 0

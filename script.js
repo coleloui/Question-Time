@@ -12,9 +12,9 @@ var answer4El = document.getElementById("answer4");
 var scoreScreen = document.getElementById("scorescreen");
 var result = document.getElementById("result");
 var tryAgain = document.getElementById("tryagain");
-var userInput = document.querySelector("#userText");
-var placeForm = document.querySelector("#place");
-var finisherList = document.querySelector("#finishers");
+// var userInput = document.getElementById("userText");
+// var placeForm = document.getElementById("place");
+// var finisherList = document.getElementById("finishers");
 var timerInterval
 var timeLeft = 45
 var counter = 0
@@ -63,52 +63,7 @@ questArray = [{
     correct: "Andrei Vasilevski"
 }]
 
-start.addEventListener("click", function () {
-    timer()
-    renderQuestions()
-    starting()
-    screen1()
-})
 
-answersEl.forEach(function (answerEl) {
-    answerEl.addEventListener("click", function (event) {
-        event.preventDefault()
-        if (event.target.textContent === questArray[counter].correct) {
-            handleCorrect()
-        } else {
-            handleIncorrect()
-        }
-    })
-})
-
-placeForm.addEventListener("keyup", function (event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    if (event.keyCode === 13) {
-
-        var userText = userInput.value.trim();
-
-        if (userText === "") {
-            return;
-        }
-
-        finishers.push(userText);
-        userInput.value = "";
-    }
-    // renderFinishers();
-})
-
-tryAgain.addEventListener("click", function (event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    if(event.target.matches("button")){
-        score()
-        starting()
-        reset()
-    }
-})
 
 function renderQuestions() {
     questionEl.textContent = questArray[counter].question
@@ -119,12 +74,12 @@ function renderQuestions() {
 }
 
 function timer() {
-
-
+    
+    
     timerInterval = setInterval(function () {
         timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
-
+        
         if (timeLeft <= -2) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
@@ -154,6 +109,8 @@ function checker() {
         clearInterval(timerInterval)
         screen1()
         score()
+        // renderFinishers()
+        renderScore()
     } else {
         renderQuestions()
     }
@@ -163,19 +120,6 @@ function checker() {
 function renderScore() {
     result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
 }
-
-function renderFinishers() {
-    finisherList.innerHTML = "";
-
-    for (var i = 0; i < finishers.length; i++) {
-        var finisher = finishers[i];
-
-        var li = document.createElement("li");
-        li.textContent = finisher;
-        finisherList.appendChild(li);
-    }
-}
-
 
 function reset() {
     if (timeLeft <= -2, counter != 0) {
@@ -210,6 +154,35 @@ function score() {
     } else {
         scoreScreen.style.display = "none";
     }
-    renderScore()
-    renderFinishers()
+    // renderScore()
+    // renderFinishers()
 }
+
+start.addEventListener("click", function () {
+    timer()
+    renderQuestions()
+    starting()
+    screen1()
+})
+
+answersEl.forEach(function (answerEl) {
+    answerEl.addEventListener("click", function (event) {
+        event.preventDefault()
+        if (event.target.textContent === questArray[counter].correct) {
+            handleCorrect()
+        } else {
+            handleIncorrect()
+        }
+    })
+})
+
+tryAgain.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (event.target.matches("button")) {
+        score()
+        starting()
+        reset()
+    }
+})

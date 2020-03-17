@@ -2,16 +2,19 @@ var body = document.body;
 var timerEl = document.getElementById("countdown");
 var start = document.getElementById("start");
 var firstEl = document.getElementById("begin");
-var container = document.getElementById("container")
-var questionEl = document.getElementById("question")
-var answersEl = document.querySelectorAll(".answer")
-var answer1El = document.getElementById("answer1")
-var answer2El = document.getElementById("answer2")
-var answer3El = document.getElementById("answer3")
-var answer4El = document.getElementById("answer4")
-var scoreScreen = document.getElementById("scorescreen")
-var result = document.getElementById("result")
-var tryAgain = document.getElementById("tryagain")
+var container = document.getElementById("container");
+var questionEl = document.getElementById("question");
+var answersEl = document.querySelectorAll(".answer");
+var answer1El = document.getElementById("answer1");
+var answer2El = document.getElementById("answer2");
+var answer3El = document.getElementById("answer3");
+var answer4El = document.getElementById("answer4");
+var scoreScreen = document.getElementById("scorescreen");
+var result = document.getElementById("result");
+var tryAgain = document.getElementById("tryagain");
+var userInput = document.querySelector("#userText");
+var placeForm = document.querySelector("#place");
+var finisherList = document.querySelector("#finishers");
 var timerInterval
 var timeLeft = 45
 var counter = 0
@@ -20,6 +23,8 @@ var incorrect = 0
 
 container.style.display = "none"
 scoreScreen.style.display = "none"
+
+var finishers = []
 
 questArray = [{
     question: "Who was the first player drafted by the Lightning?",
@@ -76,10 +81,33 @@ answersEl.forEach(function (answerEl) {
     })
 })
 
-tryAgain.addEventListener("click", function () {
-    score()
-    starting()
-    reset()
+placeForm.addEventListener("keyup", function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    if (event.keyCode === 13) {
+
+        var userText = userInput.value.trim();
+
+        if (userText === "") {
+            return;
+        }
+
+        finishers.push(userText);
+        userInput.value = "";
+    }
+    // renderFinishers();
+})
+
+tryAgain.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    if(event.target.matches("button")){
+        score()
+        starting()
+        reset()
+    }
 })
 
 function renderQuestions() {
@@ -134,7 +162,18 @@ function checker() {
 
 function renderScore() {
     result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
+}
 
+function renderFinishers() {
+    finisherList.innerHTML = "";
+
+    for (var i = 0; i < finishers.length; i++) {
+        var finisher = finishers[i];
+
+        var li = document.createElement("li");
+        li.textContent = finisher;
+        finisherList.appendChild(li);
+    }
 }
 
 
@@ -172,4 +211,5 @@ function score() {
         scoreScreen.style.display = "none";
     }
     renderScore()
+    renderFinishers()
 }

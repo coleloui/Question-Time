@@ -12,9 +12,9 @@ var answer4El = document.getElementById("answer4");
 var scoreScreen = document.getElementById("scorescreen");
 var result = document.getElementById("result");
 var tryAgain = document.getElementById("tryagain");
-// var userInput = document.getElementById("userText");
-// var placeForm = document.getElementById("place");
-// var finisherList = document.getElementById("finishers");
+var userInput = document.getElementById("userText");
+var placeForm = document.getElementById("place");
+var finisherList = document.getElementById("finishers");
 var timerInterval
 var timeLeft = 45
 var counter = 0
@@ -121,6 +121,11 @@ function renderScore() {
     result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
 }
 
+function renderfinishers() {
+
+    
+}
+
 function reset() {
     if (timeLeft <= -2, counter != 0) {
         timeLeft = 45
@@ -174,6 +179,11 @@ answersEl.forEach(function (answerEl) {
             handleIncorrect()
         }
     })
+})
+
+placeForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    console.log('you submitted the form')
 })
 
 tryAgain.addEventListener("click", function (event) {

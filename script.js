@@ -85,6 +85,7 @@ function timer() {
             clearInterval(timerInterval);
             screen1();
             score();
+            renderScore();
         }
     }, 1000)
 }
@@ -109,8 +110,8 @@ function checker() {
         clearInterval(timerInterval)
         screen1()
         score()
-        // renderFinishers()
         renderScore()
+        // renderFinishers()
     } else {
         renderQuestions()
     }
@@ -118,12 +119,31 @@ function checker() {
 
 
 function renderScore() {
-    result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!"
+    var storedFinishers = JSON.parse(localStorage.getItem("finishers"));
+
+    if (storedFinishers !== null) {
+        finishers = storedFinishers;
+    }
+    renderFinishers();
 }
 
-function renderfinishers() {
+function renderFinishers() {
+    finisherList.innerHTML = ""
 
-    
+    result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!";
+
+    for (let x=0; x < finishers.length; x++) {
+        var finisher = finishers[x];
+
+        var li = document.createElement("li");
+        li.textContent = finisher;
+        finisherList.appendChild(li);
+    }
+
+}
+
+function storeFinishers(){
+localStorage.setItem("finishers", JSON.stringify(finishers));
 }
 
 function reset() {
@@ -159,8 +179,6 @@ function score() {
     } else {
         scoreScreen.style.display = "none";
     }
-    // renderScore()
-    // renderFinishers()
 }
 
 start.addEventListener("click", function () {
@@ -184,7 +202,20 @@ answersEl.forEach(function (answerEl) {
 placeForm.addEventListener("submit", function(event) {
     event.preventDefault();
     console.log('you submitted the form')
-})
+
+    var userText = userInput.value.trim();
+
+    if (userText === "") {
+      return;
+    }
+  
+    finishers.push(userText);
+    userInput.value = "";
+    
+    storeFinishers();
+    renderFinishers();
+  });
+
 
 tryAgain.addEventListener("click", function (event) {
     event.preventDefault();

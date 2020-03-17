@@ -2,6 +2,7 @@ var body = document.body;
 var timerEl = document.getElementById("countdown");
 var start = document.getElementById("start");
 var firstEl = document.getElementById("begin");
+var view = document.getElementById("view");
 var container = document.getElementById("container");
 var questionEl = document.getElementById("question");
 var answersEl = document.querySelectorAll(".answer");
@@ -15,11 +16,13 @@ var tryAgain = document.getElementById("tryagain");
 var userInput = document.getElementById("userText");
 var placeForm = document.getElementById("place");
 var finisherList = document.getElementById("finishers");
+var clear = document.getElementById("clear");
 var timerInterval
-var timeLeft = 45
+var timeLeft = 60
 var counter = 0
 var correct = 0
 var incorrect = 0
+var finalScore = timeLeft + correct
 
 container.style.display = "none"
 scoreScreen.style.display = "none"
@@ -74,13 +77,17 @@ function renderQuestions() {
 }
 
 function timer() {
-    
-    
     timerInterval = setInterval(function () {
         timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
-        
-        if (timeLeft <= -2) {
+
+        if (correct == 0 && incorrect == 0 && timeLeft == -2) {
+            alert("You must answer at least one question.")
+            screen1();
+            starting();
+        }
+
+        if (correct > 0 || incorrect > 0 && timeLeft <= -2) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
             screen1();
@@ -91,14 +98,12 @@ function timer() {
 }
 
 function handleCorrect() {
-    console.log("you guessed correct")
     correct++
     counter++
     checker()
 }
 
 function handleIncorrect() {
-    console.log("you guessed incorrect")
     incorrect++
     counter++
     timeLeft -= 10
@@ -111,7 +116,6 @@ function checker() {
         screen1()
         score()
         renderScore()
-        // renderFinishers()
     } else {
         renderQuestions()
     }
@@ -129,26 +133,24 @@ function renderScore() {
 
 function renderFinishers() {
     finisherList.innerHTML = ""
-
     result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!";
 
-    for (let x=0; x < finishers.length; x++) {
+    for (let x = 0; x < finishers.length; x++) {
         var finisher = finishers[x];
 
         var li = document.createElement("li");
-        li.textContent = finisher;
+        li.textContent = finisher + " - " + finalScore;
         finisherList.appendChild(li);
     }
-
 }
 
-function storeFinishers(){
-localStorage.setItem("finishers", JSON.stringify(finishers));
+function storeFinishers() {
+    localStorage.setItem("finishers", JSON.stringify(finishers));
 }
 
 function reset() {
     if (timeLeft <= -2, counter != 0) {
-        timeLeft = 45
+        timeLeft = 60
         correct = 0
         incorrect = 0
         counter = 0
@@ -188,6 +190,11 @@ start.addEventListener("click", function () {
     screen1()
 })
 
+view.addEventListener("click", function () {
+    starting();
+    score();
+})
+
 answersEl.forEach(function (answerEl) {
     answerEl.addEventListener("click", function (event) {
         event.preventDefault()
@@ -199,28 +206,42 @@ answersEl.forEach(function (answerEl) {
     })
 })
 
-placeForm.addEventListener("submit", function(event) {
+placeForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    console.log('you submitted the form')
 
     var userText = userInput.value.trim();
 
     if (userText === "") {
-      return;
+        return;
     }
-  
+
+    if (correct == 0 && incorrect == 0 && timeLeft == 60) {
+        return;
+    }
+
     finishers.push(userText);
     userInput.value = "";
-    
+
     storeFinishers();
     renderFinishers();
-  });
+});
 
+clear.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    if (event.target.matches("button") === true) {
+        finishers = [];
+        storeFinishers();
+        renderFinishers();
+    }
+
+})
 
 tryAgain.addEventListener("click", function (event) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     if (event.target.matches("button")) {
         score()
         starting()

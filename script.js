@@ -87,7 +87,7 @@ function timer() {
             starting();
         }
 
-        if (correct > 0 || incorrect > 0 && timeLeft <= -2) {
+        if (timeLeft <= -2) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
             screen1();
@@ -133,7 +133,7 @@ function renderScore() {
 
 function renderFinishers() {
     finisherList.innerHTML = ""
-    result.textContent = "you got " + correct + " correct and " + incorrect + " wrong!";
+    result.textContent = "You got " + correct + " correct and " + incorrect + " wrong!";
 
     for (let x = 0; x < finishers.length; x++) {
         var finisher = finishers[x];

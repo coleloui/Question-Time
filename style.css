@@ -1,10 +1,9 @@
-body{
+body {
     background-image: url("https://1000logos.net/wp-content/uploads/2018/05/Tampa-Bay-Lightning-Logo.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-}
-h1,h3{
-    text-align: center;
+    color: lightslategrey;
+    font-family: 'Roboto Mono', monospace;
 }
 
 button {
@@ -23,27 +22,53 @@ button {
     transition-timing-function: linear;
     display: block;
     margin: auto;
-  }
-
-#question{
-      text-align: center;
-      /* text-emphasis: bold; */
-      font-size: 3em;
-      color: lightslategrey;
 }
 
-#countdown{
-      text-align: center;
-  }
+h1,
+h2,
+h3,
+h4 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 35px;
+}
 
-.hidden{
-      display: none;
-  }
+p {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 500px;
+    font-size: 25px;
+    font-weight: normal;
+}
 
-.answer{
+#countdown {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#question {
+    text-align: center;
+    font-size: 35px;
+}
+
+#place, #finishers, #result{
+    text-align: center;
+    font-size: 25px;
+}
+
+#finishers{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+.answer {
     cursor: pointer;
     text-align: center;
-    font-size: 2em;
+    font-size: 25px;
     color: grey;
     padding: 10px 0;
 }

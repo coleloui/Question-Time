@@ -14,8 +14,16 @@
     <h1>Tampa Bay Lightning Trivia!</h1>
   </div>
   <div id="begin">
-    <h3>Press start to begin</h3>
+    <h2>Press start to begin</h2>
+    <h3>Instructions: <br>
+      <p>You are given 60 seconds to anwser 5 questions by clicking on one of the answers. If an answer is incorrect you
+        lose 10 seconds on the timer. Your score will be the number of correct answers added to your remaining time. You
+        can enter your name on the Score Screen and if you would like you can clear the set of scores stored by clicking
+        Clear Scores on the Score Screen.</p>
+    </h3>
+    <br>
     <button id="start">Start</button>
+    <br>
     <button id="view">View Score Screen</button>
   </div>
   <div id="container">
@@ -27,13 +35,23 @@
     <div id="answer4" class="answer"></div>
   </div>
   <div id="scorescreen">
+    <h4>Score Screen</h4>
+    <br>
+    <br>
     <div id="result"></div>
+    <br>
+    <br>
+    <br>
     <form id="place">
       <label for="userName">Enter Your Name:</label>
+      <br>
       <input type="text" placeholder="Forrest Gump" name="userName" id="userText" />
     </form>
+    <br>
     <ul id="finishers"></ul>
+    <br>
     <button id="clear">Clear Scores</button>
+    <br>
     <button id="tryagain">Try Again!</button>
   </div>
   <script src="./script.js"></script>

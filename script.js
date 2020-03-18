@@ -22,12 +22,11 @@ var timeLeft = 60
 var counter = 0
 var correct = 0
 var incorrect = 0
-var finalScore = timeLeft + correct
+var finishers = []
 
 container.style.display = "none"
 scoreScreen.style.display = "none"
 
-var finishers = []
 
 questArray = [{
     question: "Who was the first player drafted by the Lightning?",
@@ -81,13 +80,15 @@ function timer() {
         timerEl.textContent = timeLeft + " seconds remaining";
         timeLeft--;
 
-        if (correct == 0 && incorrect == 0 && timeLeft == -2) {
+        if (correct == 0 && incorrect == 0 && timeLeft <= -2) {
             alert("You must answer at least one question.")
+            clearInterval(timerInterval);
+            reset();
             screen1();
             starting();
         }
 
-        if (timeLeft <= -2) {
+        if (counter > 0 && timeLeft <= -2) {
             timerEl.textContent = "";
             clearInterval(timerInterval);
             screen1();
@@ -98,12 +99,14 @@ function timer() {
 }
 
 function handleCorrect() {
+    alert("You got the answer correct!")
     correct++
     counter++
     checker()
 }
 
 function handleIncorrect() {
+    alert("You got that answer wrong.")
     incorrect++
     counter++
     timeLeft -= 10
@@ -116,9 +119,8 @@ function checker() {
         screen1()
         score()
         renderScore()
-    } else {
+    } else 
         renderQuestions()
-    }
 }
 
 
@@ -139,7 +141,7 @@ function renderFinishers() {
         var finisher = finishers[x];
 
         var li = document.createElement("li");
-        li.textContent = finisher + " - " + finalScore;
+        li.textContent = finisher;
         finisherList.appendChild(li);
     }
 }
@@ -149,7 +151,7 @@ function storeFinishers() {
 }
 
 function reset() {
-    if (timeLeft <= -2, counter != 0) {
+    if (timeLeft <= -2, counter != 0 ||correct == 0 && incorrect == 0 && timeLeft <= -2) {
         timeLeft = 60
         correct = 0
         incorrect = 0
@@ -188,6 +190,7 @@ start.addEventListener("click", function () {
     renderQuestions()
     starting()
     screen1()
+    reset()
 })
 
 view.addEventListener("click", function () {
@@ -200,16 +203,16 @@ answersEl.forEach(function (answerEl) {
         event.preventDefault()
         if (event.target.textContent === questArray[counter].correct) {
             handleCorrect()
-        } else {
+        } else 
             handleIncorrect()
-        }
     })
 })
 
 placeForm.addEventListener("submit", function (event) {
     event.preventDefault();
-
-    var userText = userInput.value.trim();
+    var finalScore = timeLeft + correct
+    var userText = userInput.value;
+    var userScore = userText + " - " + finalScore;
 
     if (userText === "") {
         return;
@@ -218,8 +221,7 @@ placeForm.addEventListener("submit", function (event) {
     if (correct == 0 && incorrect == 0 && timeLeft == 60) {
         return;
     }
-
-    finishers.push(userText);
+    finishers.push(userScore);
     userInput.value = "";
 
     storeFinishers();
